@@ -52,7 +52,7 @@ def _predict_single(
         "light_seq": light_seq,
     }
     progress = gr.Progress(track_tqdm=True)
-    progress(0.05, "Loading model and embeddings (first run may download ESM-1v, please wait)…")
+    progress(0.02, "📦 Downloading ESM-1v weights (first run can take a few minutes)…", total=None)
     preds = predict_batch(
         [record],
         weights=model_path,
@@ -60,7 +60,7 @@ def _predict_single(
         backend=backend or None,
         config=DEFAULT_CONFIG_PATH if DEFAULT_CONFIG_PATH.exists() else None,
     )
-    progress(1.0, "Prediction complete")
+    progress(1.0, "✅ Prediction complete")
     score = float(preds.iloc[0]["score"])
     pred = int(preds.iloc[0]["pred"])
     label = "Polyreactive" if pred == 1 else "Non-polyreactive"
@@ -134,7 +134,7 @@ def _predict_batch(
 
     records = frame.to_dict("records")
     progress = gr.Progress(track_tqdm=True)
-    progress(0.05, "Loading model and embeddings (first run may download ESM-1v, please wait)…")
+    progress(0.02, "📦 Downloading ESM-1v weights (first run can take a few minutes)…", total=None)
     preds = predict_batch(
         records,
         weights=model_path,
@@ -142,7 +142,7 @@ def _predict_batch(
         backend=backend or None,
         config=DEFAULT_CONFIG_PATH if DEFAULT_CONFIG_PATH.exists() else None,
     )
-    progress(1.0, "Batch prediction complete")
+    progress(1.0, "✅ Batch prediction complete")
     merged = frame.merge(preds, on="id", how="left")
     output_path = input_path.parent / "polyreact_predictions.csv"
     merged.to_csv(output_path, index=False)
@@ -230,14 +230,13 @@ def make_interface() -> gr.Blocks:
 
         gr.Markdown(
             """
-            **Notes**
+            ### Notes
             - Default configuration expects heavy-chain only evaluation.
-            - Backend overrides should match how the model was trained to avoid
-              feature mismatch.
+            - Backend overrides should match how the model was trained to avoid feature mismatch.
             - CSV inputs should include `id`, `heavy_seq`, and optionally `light_seq`.
             - Add a binary `label` column to compute accuracy/F1/ROC-AUC/PR-AUC/Brier.
             - Include `reactivity_count` to report Spearman correlation with predicted probabilities.
-            - Initial runs may spend a few minutes downloading the 650M-parameter ESM-1v model before predictions start.
+            - **First run downloads the 650M-parameter ESM-1v model; the progress bar will display a download message until it finishes (can take several minutes).**
             """
         )
 
