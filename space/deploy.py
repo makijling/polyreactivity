@@ -6,7 +6,7 @@ import argparse
 import os
 from pathlib import Path
 
-from huggingface_hub import HfApi, upload_folder
+from huggingface_hub import HfApi, HfFolder, upload_folder
 
 
 SPACE_FILES = {
@@ -43,10 +43,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    token = os.getenv(args.token_env)
+    token = os.getenv(args.token_env) or HfFolder.get_token()
     if not token:
         raise SystemExit(
-            f"Missing Hugging Face token. Set the {args.token_env} environment variable before running."
+            "Missing Hugging Face token. Run `huggingface-cli login` or set the token environment variable."
         )
 
     repo_id = args.space_id
