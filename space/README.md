@@ -1,3 +1,15 @@
+---
+title: Polyreactivity Benchmark
+emoji: 🧬
+colorFrom: indigo
+colorTo: orange
+sdk: gradio
+sdk_version: "4.21.0"
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # Polyreactivity Space
 
 Interactive Gradio interface for scoring antibody sequences with the trained
