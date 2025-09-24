@@ -51,6 +51,8 @@ def _predict_single(
         "heavy_seq": heavy_seq,
         "light_seq": light_seq,
     }
+    progress = gr.Progress(track_tqdm=True)
+    progress(0.05, "Loading model and embeddings (first run may download ESM-1v, please wait)…")
     preds = predict_batch(
         [record],
         weights=model_path,
@@ -58,6 +60,7 @@ def _predict_single(
         backend=backend or None,
         config=DEFAULT_CONFIG_PATH if DEFAULT_CONFIG_PATH.exists() else None,
     )
+    progress(1.0, "Prediction complete")
     score = float(preds.iloc[0]["score"])
     pred = int(preds.iloc[0]["pred"])
     label = "Polyreactive" if pred == 1 else "Non-polyreactive"
@@ -130,6 +133,8 @@ def _predict_batch(
         raise gr.Error("CSV must include at least 'id' and 'heavy_seq' columns.")
 
     records = frame.to_dict("records")
+    progress = gr.Progress(track_tqdm=True)
+    progress(0.05, "Loading model and embeddings (first run may download ESM-1v, please wait)…")
     preds = predict_batch(
         records,
         weights=model_path,
@@ -137,6 +142,7 @@ def _predict_batch(
         backend=backend or None,
         config=DEFAULT_CONFIG_PATH if DEFAULT_CONFIG_PATH.exists() else None,
     )
+    progress(1.0, "Batch prediction complete")
     merged = frame.merge(preds, on="id", how="left")
     output_path = input_path.parent / "polyreact_predictions.csv"
     merged.to_csv(output_path, index=False)
@@ -231,6 +237,7 @@ def make_interface() -> gr.Blocks:
             - CSV inputs should include `id`, `heavy_seq`, and optionally `light_seq`.
             - Add a binary `label` column to compute accuracy/F1/ROC-AUC/PR-AUC/Brier.
             - Include `reactivity_count` to report Spearman correlation with predicted probabilities.
+            - Initial runs may spend a few minutes downloading the 650M-parameter ESM-1v model before predictions start.
             """
         )
 

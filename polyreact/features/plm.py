@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import warnings
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
@@ -23,6 +24,13 @@ try:  # pragma: no cover - optional dependency
     import esm
 except ImportError:  # pragma: no cover - optional dependency
     esm = None
+
+if esm is not None:  # pragma: no cover - optional dependency
+    warnings.filterwarnings(
+        "ignore",
+        message="Regression weights not found, predicting contacts will not produce correct results.",
+        module="esm.pretrained",
+    )
 
 from .anarsi import AnarciNumberer
 
