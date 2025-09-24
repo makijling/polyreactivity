@@ -3,8 +3,13 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-import importlib.resources as pkg_resources
-from importlib.resources.abc import Traversable
+
+try:
+    import importlib.resources as pkg_resources
+    from importlib.resources.abc import Traversable
+except (ModuleNotFoundError, AttributeError):  # pragma: no cover - compatibility
+    import importlib_resources as pkg_resources  # type: ignore[no-redef]
+    from importlib_resources.abc import Traversable  # type: ignore[assignment]
 from pathlib import Path
 from typing import Any, Sequence
 
