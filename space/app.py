@@ -142,15 +142,15 @@ def _predict_batch(
     merged.to_csv(output_path, index=False)
 
     metrics_df, warnings, spearman_text = _compute_metrics(merged)
-    metrics_update = gr.DataFrame.update(value=metrics_df, visible=not metrics_df.empty)
-    spearman_update = gr.Textbox.update(value=spearman_text or "", visible=spearman_text is not None)
-    notes_update = gr.Markdown.update(
+    metrics_update = gr.update(value=metrics_df, visible=not metrics_df.empty)
+    spearman_update = gr.update(value=spearman_text or "", visible=spearman_text is not None)
+    notes_update = gr.update(
         value="\n".join(f"- {msg}" for msg in warnings) if warnings else "",
         visible=bool(warnings),
     )
 
     return (
-        gr.File.update(value=str(output_path), visible=True),
+        gr.update(value=str(output_path), visible=True),
         metrics_update,
         spearman_update,
         notes_update,
@@ -212,7 +212,7 @@ def make_interface() -> gr.Blocks:
             batch_model = gr.File(label="Model artifact (.joblib)", file_types=[".joblib"], file_count="single")
             batch_button = gr.Button("Run batch predictions", variant="primary")
             batch_output = gr.File(label="Download predictions", visible=False)
-            batch_metrics = gr.DataFrame(label="Benchmark metrics", visible=False)
+            batch_metrics = gr.Dataframe(label="Benchmark metrics", visible=False)
             batch_spearman = gr.Textbox(label="Flag-count Spearman", interactive=False, visible=False)
             batch_notes = gr.Markdown(visible=False)
 
