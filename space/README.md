@@ -34,6 +34,7 @@ polyreactivity model.
   predicted probabilities and graded ELISA flag counts.
 - The app writes merged inputs + predictions to `polyreact_predictions.csv`
   for downstream analysis.
+- A four-row demo file lives in `space/examples/sample_batch.csv`.
 
 ### Environment Variables
 
