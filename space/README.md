@@ -2,7 +2,7 @@
 title: Polyreactivity Benchmark
 emoji: 🧬
 colorFrom: indigo
-colorTo: orange
+colorTo: purple
 sdk: gradio
 sdk_version: "4.21.0"
 app_file: app.py
