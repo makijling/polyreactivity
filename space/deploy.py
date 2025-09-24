@@ -17,6 +17,7 @@ SPACE_FILES = {
     "pyproject.toml": "pyproject.toml",
     "LICENSE": "LICENSE",
     "configs/default.yaml": "configs/default.yaml",
+    "space/artifacts/model.joblib": "artifacts/model.joblib",
 }
 
 SPACE_FOLDERS = {
