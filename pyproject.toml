@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "polyreact"
+version = "0.1.0"
+description = "Reliable polyreactivity prediction pipeline for antibodies"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Polyreact Team" }]
+license = { file = "LICENSE" }
+dependencies = [
+    "torch==2.2.2",
+    "transformers==4.40.1",
+    "tokenizers==0.19.1",
+    "scikit-learn==1.4.2",
+    "pandas==2.2.2",
+    "numpy==1.26.4",
+    "scipy==1.13.0",
+    "biopython==1.83",
+    "anarcii==2.0.2",
+    "huggingface_hub==0.22.2",
+    "matplotlib==3.8.4",
+    "tqdm==4.66.2",
+    "pyyaml==6.0.1",
+    "joblib==1.3.2",
+    "statsmodels==0.14.2",
+    "gradio==4.21.0",
+    "openpyxl==3.1.5"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black==24.4.2",
+    "ruff==0.4.1",
+    "mypy==1.9.0",
+    "pytest==8.1.1"
+]
+
+[project.scripts]
+polyreact-predict = "polyreact.predict:main"
+polyreact-train = "polyreact.train:main"
+
+[tool.setuptools.packages.find]
+include = ["polyreact*"]
+where = ["."]
+
+[tool.setuptools.package-data]
+"polyreact" = ["configs/*.yaml"]
+
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "N"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_return_any = true

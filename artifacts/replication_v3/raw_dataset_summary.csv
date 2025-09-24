@@ -1,0 +1,5 @@
+dataset,path,rows,positives,positive_rate,reactivity_count_mean,reactivity_count_median,reactivity_count_max,unique_heavy,smp_mean,smp_median,smp_max,smp_min
+boughter_rebuilt,data/processed/boughter_counts_rebuilt.csv,970,501,0.5164948453608248,3.0670103092783507,4.0,7.0,970,,,,
+jain2017,data/processed/jain.csv,80,31,0.3875,,,,80,0.43448527345,0.116789767,1.960070104,-0.001057262
+shehata2019,data/processed/shehata.csv,88,51,0.5795454545454546,,,,87,0.40685909090909095,0.27,1.6,-0.032
+harvey2022,data/processed/harvey.csv,1000,500,0.5,,,,1000,,,,

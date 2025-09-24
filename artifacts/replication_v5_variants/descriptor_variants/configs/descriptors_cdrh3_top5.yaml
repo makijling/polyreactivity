@@ -1,0 +1,33 @@
+seed: 42
+device: auto
+feature_backend:
+  type: descriptors
+  plm_model_name: facebook/esm1v_t33_650M_UR90S_1
+  layer_pool: mean
+  cache_dir: .cache/embeddings
+  standardize: true
+descriptors:
+  use_anarci: true
+  regions:
+  - CDRH3
+  features:
+  - pI
+  - net_charge
+  - charge
+  - hydropathy
+  - length
+  ph: 7.4
+model:
+  head: logreg
+  C: 0.1
+  class_weight: balanced
+calibration:
+  method: isotonic
+training:
+  cv_folds: 10
+  scoring: roc_auc
+  n_jobs: -1
+io:
+  outputs_dir: artifacts
+  preds_filename: preds.csv
+  metrics_filename: metrics.csv

@@ -1,0 +1,5 @@
+id,source,split,y_true,y_score,y_pred
+B1,boughter,train_cv_oof,0,0.5,1
+B2,boughter,train_cv_oof,1,0.5,1
+J1,jain,jain,1,0.5,1
+J2,jain,jain,0,0.5,1

@@ -1,0 +1,36 @@
+seed: 42
+device: auto
+feature_backend:
+  type: descriptors
+  plm_model_name: facebook/esm2_t12_35M_UR50D
+  layer_pool: mean
+  cache_dir: .cache/embeddings
+  standardize: true
+descriptors:
+  use_anarci: true
+  regions:
+  - CDRH1
+  - CDRH2
+  - CDRH3
+  features:
+  - length
+  - charge
+  - hydropathy
+  - aromaticity
+  - pI
+  - net_charge
+  ph: 7.4
+model:
+  head: logreg
+  C: 0.1
+  class_weight: balanced
+calibration:
+  method: isotonic
+training:
+  cv_folds: 10
+  scoring: roc_auc
+  n_jobs: -1
+io:
+  outputs_dir: artifacts
+  preds_filename: preds.csv
+  metrics_filename: metrics.csv

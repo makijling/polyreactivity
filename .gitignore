@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.cache/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.DS_Store
+workspace-backup-*.tar.gz
